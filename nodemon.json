@@ -1,0 +1,8 @@
+{ 
+  "ext": "js,css,ejs,env",
+  "ignore": [".git", "node_modules"],
+  "execMap": {
+    "js": "node"
+  },
+  "exec": "node"
+}
