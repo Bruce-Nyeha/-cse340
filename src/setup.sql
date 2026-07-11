@@ -42,3 +42,28 @@ VALUES
 (3, 'Community Wellness Expo', 'Offering free health screenings and wellness resources.', 'City Civic Center', '2024-10-06'),
 
 (3, 'Emergency Relief Kit Assembly', 'Assembling emergency kits for families affected by disasters.', 'UnityServe Warehouse', '2024-08-28');
+
+
+-- 1. Create the base Category table
+CREATE TABLE category (
+    category_id SERIAL PRIMARY KEY,
+    category_name VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- 2. Create the Many-to-Many Junction Table to link Projects and Categories
+CREATE TABLE project_category (
+    project_id INT REFERENCES service_project(project_id) ON DELETE CASCADE,
+    category_id INT REFERENCES category(category_id) ON DELETE CASCADE,
+    PRIMARY KEY (project_id, category_id)
+);
+
+-- 3. Seed at least 3 categories relevant to service projects
+INSERT INTO category (category_name) VALUES 
+('Disaster Relief'),
+('Community Outreach'),
+('Environmental');
+
+-- 4. Associate your existing 15 projects with at least one category
+-- This loops through your project IDs (1 to 15) and pairs them to categories (1, 2, or 3)
+INSERT INTO project_category (project_id, category_id) 
+SELECT id, (id % 3) + 1 FROM generate_series(1, 15) as id;

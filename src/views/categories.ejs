@@ -1,42 +1,14 @@
-<%- include('partials/header') %>
-
-<section class="content-block">
-  <h2>Service Project Categories</h2>
-  <p class="section-intro">Explore various community outreach focus tracks available inside our global service index matrix:</p>
-  
-  <div class="categories-grid">
-    <div class="category-card">
-      <div class="card-image-wrapper">
-        <img src="/images/environmental.png" alt="Environmental sector icon" class="category-icon-img" />
-      </div>
-      <h3>Environmental</h3>
-      <p>Conservation, community cleanups, forestry development, and zero-waste initiatives.</p>
-    </div>
-
-    <div class="category-card">
-      <div class="card-image-wrapper">
-        <img src="/images/education.png" alt="Educational sector icon" class="category-icon-img" />
-      </div>
-      <h3>Educational</h3>
-      <p>Youth tutoring, technical literacy bootcamps, and library resource management loops.</p>
-    </div>
-
-    <div class="category-card">
-      <div class="card-image-wrapper">
-        <img src="/images/partners.png" alt="Community service sector icon" class="category-icon-img" />
-      </div>
-      <h3>Community Service</h3>
-      <p>Shelter coordination, community kitchen aid, infrastructure support, and local outreach programs.</p>
-    </div>
-
-    <div class="category-card">
-      <div class="card-image-wrapper">
-        <img src="/images/healthcare.png" alt="Health and wellness sector icon" class="category-icon-img" />
-      </div>
-      <h3>Health and Wellness</h3>
-      <p>Clinical resource dispatch, fitness awareness, health clinics, and mental wellness access tracks.</p>
-    </div>
-  </div>
-</section>
-
+<!-- src/views/categories.ejs -->
+ <%- include('partials/header') %>
+    <main>
+      <%= title %>
+        <h1>Service Project Categories</h1>
+        <ul>
+            <% categories.forEach(category => { %>
+                <li><%= category.category_name %></li>
+            <% }); %>
+        </ul>
+    </main>
+</body>
+</html>
 <%- include('partials/footer') %>
