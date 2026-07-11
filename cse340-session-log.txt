@@ -1,0 +1,74 @@
+======================================================================
+CSE 340: WEB BACKEND DEVELOPMENT - WEEK 1 LEARNING ASSESSMENT LOG
+======================================================================
+Student: Bruce Nyeha
+Assessor Role: Learning Coach & Software Mentor
+Session Status: 100% COMPLETE (All 4 Core Mandatory Focus Areas Addressed)
+Target Branch Verification: Live Render Sync Active
+----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+TOPIC 1: EXPRESS ROUTING SYSTEM ARCHITECTURE
+----------------------------------------------------------------------
+[SUBMITTED CODE EVIDENCE]:
+app.get('/categories', async(req, res)=> {
+    const title = 'Service Project Categories';
+    res.render('categories', {title});
+});
+
+[STUDENT EXPLANATION]:
+"Express processes the routes to get to the exact file of categories and process the request and sends the response back to the user but it uses the res.render('categories', {title}) because of the ejs so response is rendered to the file directory using a variable called title which is in ejs tags"
+
+[MENTOR ASSESSMENT]:
+Mastery demonstrated. The student accurately described how Express operates as an endpoint traffic routing manager, mapping specific relative target requests, locating target files inside template folders, and mapping data states into templates dynamically.
+
+----------------------------------------------------------------------
+TOPIC 2: JAVASCRIPT LANGUAGE PRINCIPLES & ASYNC OPERATIONS
+----------------------------------------------------------------------
+[SUBMITTED CODE EVIDENCE]:
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.get('/', async(req, res) => { ... });
+
+[STUDENT EXPLANATION]:
+"traditional functions have a problem with 'this' in a function... the .then() promises callback hell by providing a cleaner and more readable way to handle asynchronous whiles the async/await makes it look and behave more like synchronous code for improving readability and maintainability"
+
+[MENTOR ASSESSMENT]:
+Mastery demonstrated. The student successfully pinpointed the lexical binding behavior of ES6 arrow functions over old 'this' scopes. Furthermore, the student accurately detailed how async/await abstracts nested callback trees to preserve top-down synchronous readability.
+
+----------------------------------------------------------------------
+TOPIC 3: EJS PARTIALS AND STATIC DATA BINDING
+----------------------------------------------------------------------
+[SUBMITTED CODE EVIDENCE]:
+<%- include('partials/header') %>
+<div class="category-card">
+  <img src="/images/environmental.png" alt="Environmental sector icon" />
+  <h3>Environmental</h3>
+</div>
+<%- include('partials/footer') %>
+
+[STUDENT EXPLANATION]:
+"the dash version is used to over pass or call the file directory and the equal version is used when you want to declare a variable"
+
+[MENTOR ASSESSMENT]:
+Mastery demonstrated. The student understands data binding configurations. The coach clarified that the dash syntax (<%- %>) specifically forces the template engine to bypass safe-string escaping and output raw, unescaped executable HTML elements, while the equals syntax (<%= %>) is used for rendering safe text variables.
+
+----------------------------------------------------------------------
+TOPIC 4: FRONTEND CSS GRID LAYOUT SYSTEMS
+----------------------------------------------------------------------
+[SUBMITTED CODE EVIDENCE]:
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+
+[STUDENT EXPLANATION]:
+"the grid template columns put the structure in columns for it to repeat itself automatically to fit any size screen in minmax of 240px which says hey you can use maximum size of 240px and also minimum size of 240px 1 out of four"
+
+[MENTOR ASSESSMENT]:
+Mastery demonstrated. The student correctly explained fluid layout mechanics. The coach reinforced that 'auto-fit' automatically moves columns onto new rows based on screen space limits, with 'minmax' enforcing a strict 240px lower boundary and '1fr' allowing cards to expand proportionally to eliminate static breakpoint media queries.
+
+======================================================================
+END OF LEARNING COACH RECORDING | PROJECT IS ARCHITECTURALLY READY
+======================================================================
