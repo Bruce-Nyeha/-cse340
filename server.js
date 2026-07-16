@@ -1,70 +1,40 @@
-import 'dotenv/config';
-import express from "express";
-import { fileURLToPath } from 'url';
+
+import express from 'express';
+import dotenv from 'dotenv';
 import path from 'path';
-import { testConnection } from './src/models/db.js';
-import { getAllOrganizations } from './src/models/organizations.js';
-import { getAllProjects } from './src/models/projects.js';
-import { getAllCategories } from './src/models/categories.js';
+import { fileURLToPath } from 'url';
+import router from './src/routes.js';
 
-// Define the application environment
-const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || "production";
 
-// Define the port number the server will listen on
-const PORT = process.env.PORT || 3000;
+dotenv.config();
+
+const app = express();
+const port = process.env.PORT || 3000;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = express();
-
-// Set EJS as the templating engine
+// View engine token setup properties configuration
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'src', 'views'));
 
-// Tell Express where to find your templates
-app.set('views', path.join(__dirname, 'src/views'));
-
-/**
-  * Configure Express middleware
-  */
-
-// Serve static files from the public directory
+// Core factory assembly line assets middleware registration blocks
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
-/*** Routes ***/
-app.get('/', (req, res) => {
-  const title = 'Home';
-  res.render('home', { title});
+app.use(router);
+
+
+app.use((err, req, res, next) => {
+    console.error('Captured application error event stream:', err.message);
+    res.status(err.status || 500).render('error', { 
+        title: 'Error Encountered', 
+        message: err.message || 'Something went wrong on our end!' 
+    });
 });
 
-app.get('/organizations', async (req, res) => {
-    const organizations = await getAllOrganizations(); 
-    // console.log('organizations:', organizations); // Log the retrieved organizations for debugging
-    const title = 'Our Partner Organizations';
-    res.render('organizations', { title, organizations });
-});
-
-app.get('/projects', async (req, res) => {
-  const projects = await getAllProjects();
-  // console.log('projects:', projects); // Log the retrieved projects for debugging
-  const title = 'Projects';
-  res.render('projects', { title, projects });
-});
-
-app.get('/categories', async (req, res) => {
-  const categories = await getAllCategories();
-  // console.log('categories:', categories); // Log the retrieved categories for debugging
-  const title = 'Categories';
-  res.render('categories', { title, categories });
-});
-
-app.listen(PORT,async() => {
-  try {
-    await testConnection();
-    console.log(`server is running at http://127.0.1:${PORT}`);
-    console.log(`Environment: ${NODE_ENV}`);
-  } catch (error) {
-    console.error('Error connecting to the database:', error);
-  }
+app.listen(port, () => {
+    console.log(`  Server running securely in ${process.env.NODE_ENV || 'development'} mode at http://localhost:${port}`);
 });
