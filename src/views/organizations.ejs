@@ -1,14 +1,43 @@
+<%- include('partials/header') %>
 
-    <%- include('partials/header') %>
-<main>
-    <h1><%= title %></h1>
+<main class="orgs-main-container">
+    <h1 class="page-title">Our Partner Organizations</h1>
+    <div class="orgs-grid-wrapper">
         
-<p>Here are a few of our partner organizations:</p>
-<ul>
-    <li><img src="/images/brightfuture-logo.png" alt="BrightFuture Builders logo"><strong>BrightFuture Builders</strong>: info@brightfuture.org</li>
-    <li><img src="/images/greenharvest-logo.png" alt="GreenHarvest Growers logo"><strong>GreenHarvest Growers</strong>: contact@greenharvest.org</li>
-    <li><img src="/images/unityserve-logo.png" alt="UnityServe Volunteers logo"><strong>UnityServe Volunteers</strong>: hello@unityserve.org</li>
-</ul>
+        <% if (locals.organizations && organizations.length > 0) { %>
+            <% organizations.forEach(org => { 
+                /* Directly forces filenames to align perfectly with your sidebar file list */
+                let finalImageFile = "default-logo.png";
+                let checkName = (org.name || org.organization_name || "").toLowerCase();
+                
+                if (checkName.includes("brightfuture")) {
+                    finalImageFile = "brightfuture-logo.png";
+                } else if (checkName.includes("greenharvest")) {
+                    finalImageFile = "greenharvest-logo.png";
+                } else if (checkName.includes("unityserve")) {
+                    finalImageFile = "unityserve-logo.png";
+                }
+            %>
+                <div class="org-card-item">
+                    <h3 class="org-card-title"><%= org.name || org.organization_name || "Partner Organization" %></h3>
+                    
+                    <div class="org-logo-box">
+                        <!-- FIXED PATH: Absolute leading forward slash / keeps media loading flawlessly -->
+                        <img class="org-card-logo" src="/images/<%= finalImageFile %>" alt="Organization Logo">
+                    </div>
+                    
+                    <p class="org-card-description"><%= org.description || "A dedicated community organization supporting local outreach initiatives." %></p>
+                    
+                    <p class="org-card-contact">
+                        <strong>Email:</strong> <a href="mailto:<%= org.email || org.organization_email %>"><%= org.email || org.organization_email || "contact@service.org" %></a>
+                    </p>
+                </div>
+            <% }) /* Closes the forEach loop safely */ %>
+        <% } else { %>
+            <p>No organizations found in the database.</p>
+        <% } /* Closes the if statement safely */ %>
+        
+    </div>
 </main>
+
 <%- include('partials/footer') %>
-    

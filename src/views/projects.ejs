@@ -1,13 +1,41 @@
 <%- include('partials/header') %>
-    <h2>Upcoming Service Projects</h2>
-<ul>
-    <% projects.forEach(project => { %>
-        <li>
-            <%= new Date(project.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>: 
-            <%= project.title %> 
-            (<%= project.name || project.organization_name %>)
-        </li>
-    <% }); %>
-</ul>
+
+<main class="projects-main-container">
+    <h1 class="page-title">Upcoming Service Projects</h1>
+    
+    <!-- Grid Wrapper Parent Container -->
+    <div class="projects-grid-wrapper">
+        
+        <% if (locals.projects && projects.length > 0) { %>
+            <% projects.forEach((project) => { %>
+                <!-- Individual Project Item Card -->
+                <div class="project-card-item">
+                    
+                    <div class="project-card-header">
+                        <span class="project-date">
+                            <%= project.date || project.project_date ? new Date(project.date || project.project_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }) : 'Upcoming Date' %>
+                        </span>
+                        <h3 class="project-card-title"><%= project.title || "Untitled Project" %></h3>
+                        <span class="project-org-tag">
+                            <em><%= project.name || project.organization_name || "Sponsoring Organization" %></em>
+                        </span>
+                    </div>
+                    
+                    <div class="project-card-body">
+                        <p class="project-desc"><%= project.description || "No description provided." %></p>
+                    </div>
+                    
+                    <div class="project-card-footer">
+                        <p class="project-loc">📍 <%= project.location || "Location TBD" %></p>
+                    </div>
+                    
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p class="no-data-message">No upcoming service projects found.</p>
+        <% } %>
+
+    </div>
+</main>
 
 <%- include('partials/footer') %>

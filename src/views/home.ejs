@@ -1,9 +1,28 @@
 <%- include('partials/header') %>
-<main>
-    <h1><%= title %></h1>
-       <h2>Welcome to the CSE 340 Service Network!</h2>
-<p>Our mission is to promote service across the world by connecting volunteers with service opportunities in their community.</p>
 
-<img class="main-logo" src="images/cse340-service-network.png" alt="CSE 340 Service Network Logo">
+<main class="home-main-container">
+    
+    <!-- Page Title Header Element -->
+    <h1 class="page-title"><%= title || "Home" %></h1>
+    
+    <!-- Main Content Card Wrapper Block Container -->
+    <div class="content-card-box">
+        
+        <!-- Main Logo Component Layer placed right on top -->
+        <div class="logo-wrapper">
+            <img class="main-logo" src="/images/cse340-service-network.png" alt="CSE 340 Service Network Logo">
+        </div>
+        
+        <!-- Description Texts Content Elements Box -->
+        <h2 class="welcome-heading">Welcome to Community Service Hub</h2>
+        
+        <p class="mission-statement">Our mission is to connect volunteers with meaningful service opportunities that strengthen communities and improve lives.</p>
+        
+        <!-- Action Navigation Call Anchor Link Element Button -->
+        <a href="/projects" class="explore-btn">Explore Projects</a>
+        
+    </div>
+
 </main>
+
 <%- include('partials/footer') %>

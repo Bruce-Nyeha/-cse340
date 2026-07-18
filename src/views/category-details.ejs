@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+
+<main class="category-details-container">
+    <h1 class="page-title"><%= category.category_name %> Projects</h1>
+    
+    <% if (projects.length === 0) { %>
+        <p class="no-data-message">No service projects are currently listed under this category.</p>
+    <% } else { %>
+        <ul class="projects-list-group">
+            <% projects.forEach(project => { %>
+                <li class="project-list-item">
+                    <!-- Links name directly to the specific project detail page -->
+                    <a href="/project/<%= project.project_id %>" class="project-detail-link">
+                        <%= project.title %>
+                    </a>
+                    <span class="org-attribution-tag">sponsored by <%= project.organization_name %></span>
+                </li>
+            <% }); %>
+        </ul>
+    <% } %>
+    
+    <a href="/categories" class="back-link">← Back to All Categories</a>
+</main>
+
+<%- include('partials/footer') %>

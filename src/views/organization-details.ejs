@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+<main class="details-main-container">
+    <h1 class="details-title"><%= organization.name %></h1>
+    
+    <div class="details-card">
+        <p><strong>Email:</strong> <%= organization.email %></p>
+        <p><strong>Description:</strong> <%= organization.description %></p>
+        
+        <h2>Sponsored Service Projects</h2>
+        <% if (projects && projects.length > 0) { %>
+            <ul class="org-projects-list">
+                <% projects.forEach(proj => { %>
+                    <li>
+                        <a href="/project//<%= proj.project_id %>"><%= proj.title %></a> 
+                        - <%= new Date(proj.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>No service projects are currently hosted by this organization.</p>
+        <% } %>
+    </div>
+    
+    <a href="/organizations" class="back-link">← Back to Organizations</a>
+</main>
+
+<%- include('partials/footer') %>

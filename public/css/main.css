@@ -154,3 +154,287 @@ footer p {
   font-size: 0.95rem;
   letter-spacing: 0.025em;
 }
+
+
+/* Homepage Layout Rule Set Definitions */
+
+.home-main-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.home-main-container .page-title {
+  color: #1e3a8a;
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.home-main-container .content-card-box {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  text-align: left;
+}
+
+.home-main-container .logo-wrapper {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.home-main-container .main-logo {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
+.home-main-container .welcome-heading {
+  color: #1e3a8a;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem 0;
+}
+
+.home-main-container .mission-statement {
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 2rem 0;
+}
+
+.home-main-container .explore-btn {
+  display: inline-block;
+  background-color: #0056b3;
+  color: #ffffff;
+  padding: 0.65rem 1.25rem;
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.home-main-container .explore-btn:hover {
+  background-color: #004085;
+}
+
+
+/* Organizations Grid Board Architecture Layout Rules */
+
+.orgs-main-container {
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.orgs-main-container .page-title {
+  color: #1e3a8a;
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* Three-column card grid alignment with auto-wrap capabilities */
+.orgs-grid-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  align-items: stretch;
+}
+
+/* Individual Card Blocks Container styling matches screenshot */
+.org-card-item {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.org-card-title {
+  color: #0056b3;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+}
+
+.org-logo-box {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.org-card-logo {
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: contain;
+}
+
+.org-card-description {
+  color: #64748b;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+  flex-grow: 1; /* Pushes the contact email down so all cards stay equal height */
+}
+
+.org-card-contact {
+  color: #334155;
+  font-size: 0.85rem;
+  margin: 0;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 1rem;
+}
+
+.org-card-contact a {
+  color: #475569;
+  text-decoration: none;
+}
+
+.org-card-contact a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/* 📅 Service Projects Responsive Card Grid Layout Rules */
+
+.projects-main-container {
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.projects-main-container .page-title {
+  color: #1e3a8a;
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* Three-column responsive grid container spacing */
+.projects-grid-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  align-items: stretch;
+}
+
+/* Individual Card Item Styling matching your Organizations look */
+.project-card-item {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.project-card-header {
+  margin-bottom: 1rem;
+}
+
+.project-date {
+  display: block;
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.project-card-title {
+  color: #1e3a8a;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.project-org-tag {
+  display: block;
+  font-size: 0.9rem;
+  color: #0056b3;
+}
+
+.project-card-body {
+  flex-grow: 1;
+  margin-bottom: 1.5rem;
+}
+
+.project-desc {
+  color: #475569;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.project-card-footer {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 1rem;
+}
+
+.project-loc {
+  color: #475569;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+
+/* 🏷️ Categories Single-Card Bullet List Layout Rules */
+
+.categories-main-container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.categories-main-container .page-title {
+  color: #1e3a8a;
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Formats the bullet layout list inside the single block card elements */
+.categories-bullet-list {
+  padding-left: 1.5rem;
+  margin: 1.5rem 0 0 0;
+}
+
+.category-bullet-item {
+  margin-bottom: 0.85rem;
+  color: #334155;
+  font-size: 1rem;
+  list-style-type: disc; /* Forces clean standard bullet markings */
+}
+
+.category-detail-link {
+  color: #0056b3;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.category-detail-link:hover {
+  text-decoration: underline;
+  color: #004085;
+}
