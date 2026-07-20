@@ -438,3 +438,28 @@ footer p {
   text-decoration: underline;
   color: #004085;
 }
+
+
+/* 📍 Projects Card Footer Image Pin Alignment Rules */
+
+.project-card-footer {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 1rem;
+}
+
+.project-loc {
+  color: #475569;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin: 0;
+  display: flex;
+  align-items: center; /* Centers the icon perfectly with your text baseline */
+}
+
+.project-loc .location-icon {
+  width: 16px;       /* Hardcoded professional icon width boundary dimensions */
+  height: 16px;      /* Hardcoded professional icon height boundary dimensions */
+  object-fit: contain;
+  margin-right: 0.5rem; /* Pushes the location text text over evenly */
+  flex-shrink: 0;    /* Prevents the image pin from squishing on thin layout layers */
+}

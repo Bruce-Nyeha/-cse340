@@ -19,11 +19,18 @@
                 }
             %>
                 <div class="org-card-item">
-                    <h3 class="org-card-title"><%= org.name || org.organization_name || "Partner Organization" %></h3>
+
+                    <h3 class="org-card-title">
+                        <a href="/organization/<%= org.organization_id %>" style="color: #0056b3; text-decoration: none; font-weight: 700;">
+                            <%= org.name || org.organization_name || "Partner Organization" %>
+                        </a>
+                    </h3>
                     
                     <div class="org-logo-box">
-                        <!-- FIXED PATH: Absolute leading forward slash / keeps media loading flawlessly -->
-                        <img class="org-card-logo" src="/images/<%= finalImageFile %>" alt="Organization Logo">
+                        
+                        <a href="/organization/<%= org.organization_id %>">
+                            <img class="org-card-logo" src="/images/<%= finalImageFile %>" alt="Organization Logo">
+                        </a>
                     </div>
                     
                     <p class="org-card-description"><%= org.description || "A dedicated community organization supporting local outreach initiatives." %></p>

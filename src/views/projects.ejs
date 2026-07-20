@@ -15,7 +15,14 @@
                         <span class="project-date">
                             <%= project.date || project.project_date ? new Date(project.date || project.project_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }) : 'Upcoming Date' %>
                         </span>
-                        <h3 class="project-card-title"><%= project.title || "Untitled Project" %></h3>
+                        
+                        
+                        <h3 class="project-card-title">
+                            <a href="/project/<%= project.project_id %>" style="color: #1e3a8a; text-decoration: none; font-weight: 700;">
+                                <%= project.title || "Untitled Project" %>
+                            </a>
+                        </h3>
+                        
                         <span class="project-org-tag">
                             <em><%= project.name || project.organization_name || "Sponsoring Organization" %></em>
                         </span>
@@ -25,9 +32,15 @@
                         <p class="project-desc"><%= project.description || "No description provided." %></p>
                     </div>
                     
+                
                     <div class="project-card-footer">
-                        <p class="project-loc">📍 <%= project.location || "Location TBD" %></p>
+                        <p class="project-loc">
+                            <img class="location-icon" src="/images/location.png" alt="Location Pin Icon">
+                            <%= project.location || "Location TBD" %>
+                        </p>
                     </div>
+                    
+
                     
                 </div>
             <% }) %>
