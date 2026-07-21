@@ -463,3 +463,210 @@ footer p {
   margin-right: 0.5rem; /* Pushes the location text text over evenly */
   flex-shrink: 0;    /* Prevents the image pin from squishing on thin layout layers */
 }
+
+/* 🏢 Single Item Details Panel Layout Architecture Definitions */
+
+.detail-page-container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.org-detail-header-block {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.org-detail-logo-frame {
+  width: 80px;
+  height: 80px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.org-detail-profile-logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.main-detail-title {
+  color: #1e3a8a;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.info-details-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.profile-summary-card {
+  margin-bottom: 2.5rem;
+}
+
+.detail-item-row {
+  margin: 0 0 1rem 0;
+  color: #334155;
+  font-size: 1rem;
+}
+
+.location-row {
+  display: flex;
+  align-items: center;
+}
+
+.detail-location-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  margin: 0 0.35rem;
+  flex-shrink: 0;
+}
+
+.description-block {
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.detail-value-text {
+  color: #475569;
+}
+
+.detail-inline-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.detail-inline-link:hover {
+  text-decoration: underline;
+}
+
+/* Category Tag Elements Architecture */
+.details-tags-wrapper {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 1.5rem;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tags-label {
+  color: #334155;
+}
+
+.tags-list-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.category-pill-tag {
+  display: inline-block;
+  background-color: #f1f5f9;
+  color: #1e3a8a;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.category-pill-tag:hover {
+  background-color: #e2e8f0;
+}
+
+.empty-tag-msg {
+  color: #64748b;
+}
+
+/* Sub-projects list configurations inside organization view */
+.sub-listings-section {
+  margin-top: 2.5rem;
+}
+
+.sub-section-heading {
+  color: #1e3a8a;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+}
+
+.sub-records-list-wrapper {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sub-record-card-item {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.sub-record-item-title-link {
+  color: #0056b3;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.sub-record-item-title-link:hover {
+  text-decoration: underline;
+}
+
+.sub-record-item-meta-date {
+  display: block;
+  color: #64748b;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.directory-back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  color: #1e3a8a;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.directory-back-link:hover {
+  text-decoration: underline;
+}
+
+/* 📅 Sponsored Sub-records List Image Calendar Positioning Rules */
+
+.sub-record-item-meta-date {
+  display: flex;
+  align-items: center; /* Aligns the icon perfectly with your text baseline */
+  color: #64748b;
+  font-size: 0.85rem;
+  margin-top: 0.4rem;
+}
+
+.sub-record-item-meta-date .detail-calendar-icon {
+  width: 14px;        /* Matches the text size scale elegantly */
+  height: 14px;
+  object-fit: contain;
+  margin-right: 0.35rem; /* Spacing between the image and text */
+  flex-shrink: 0;     /* Prevents squishing on thin layout frames */
+}

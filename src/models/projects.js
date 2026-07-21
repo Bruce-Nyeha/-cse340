@@ -18,6 +18,7 @@ export const getAllProjects = async () => {
 /**
  * 2. Retrieve a single service project by its primary ID
  */
+// Open src/models/projects.js and update this specific function:
 export const getProjectById = async (projectId) => {
     const sql = `
         SELECT sp.*, o.name as organization_name, o.logo as organization_logo
@@ -26,5 +27,6 @@ export const getProjectById = async (projectId) => {
         WHERE sp.project_id = $1;
     `;
     const result = await db.query(sql, [projectId]);
-    return result.rows; 
+    /* 🚀 FIXED: Return rows[0] so the controller gets a single object, not an array */
+    return result.rows[0]; 
 };

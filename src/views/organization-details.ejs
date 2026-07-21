@@ -1,28 +1,60 @@
 <%- include('partials/header') %>
 
-<main class="details-main-container">
-    <h1 class="details-title"><%= organization.name %></h1>
+<main class="detail-page-container">
     
-    <div class="details-card">
-        <p><strong>Email:</strong> <%= organization.email %></p>
-        <p><strong>Description:</strong> <%= organization.description %></p>
+    <!-- Side-by-side title block using structural classes -->
+    <div class="org-detail-header-block">
+        <% 
+            let finalImageFile = "default-logo.png";
+            let checkName = (organization.name || "").toLowerCase();
+            if (checkName.includes("brightfuture")) { finalImageFile = "brightfuture-logo.png"; }
+            else if (checkName.includes("greenharvest")) { finalImageFile = "greenharvest-logo.png"; }
+            else if (checkName.includes("unityserve")) { finalImageFile = "unityserve-logo.png"; }
+        %>
+        <div class="org-detail-logo-frame">
+            <img class="org-detail-profile-logo" src="/images/<%= finalImageFile %>" alt="Organization Logo">
+        </div>
+        <h1 class="main-detail-title"><%= organization.name %></h1>
+    </div>
+    
+    <!-- Overview Profile Block -->
+    <div class="info-details-card profile-summary-card">
+        <p class="detail-item-row">
+            <strong>Email:</strong> 
+            <a href="mailto:<%= organization.email %>" class="detail-inline-link"><%= organization.email %></a>
+        </p>
+        <p class="detail-item-row description-block">
+            <strong>Description:</strong> 
+            <span class="detail-value-text"><%= organization.description %></span>
+        </p>
+    </div>
+
+    <!-- Related Database Projects Section Grid Layout loop -->
+    <div class="sub-listings-section">
+        <h2 class="sub-section-heading">Sponsored Service Projects</h2>
         
-        <h2>Sponsored Service Projects</h2>
         <% if (projects && projects.length > 0) { %>
-            <ul class="org-projects-list">
+            <ul class="sub-records-list-wrapper">
                 <% projects.forEach(proj => { %>
-                    <li>
-                        <a href="/project//<%= proj.project_id %>"><%= proj.title %></a> 
-                        - <%= new Date(proj.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+                    <li class="sub-record-card-item">
+                        <a href="/project/<%= proj.project_id %>" class="sub-record-item-title-link">
+                            <%= proj.title %>
+                        </a> 
+                        <span class="sub-record-item-meta-date">
+                            <!-- 🚀 FIXED: Replaced calendar emoji text with an absolute local image icon route path -->
+                            <img class="detail-calendar-icon" src="/images/calendar.png" alt="Calendar Icon">
+                            <%= new Date(proj.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }) %>
+                        </span>
                     </li>
                 <% }); %>
             </ul>
         <% } else { %>
-            <p>No service projects are currently hosted by this organization.</p>
+            <p class="no-sub-records-msg">No service projects are currently hosted by this organization.</p>
         <% } %>
     </div>
     
-    <a href="/organizations" class="back-link">← Back to Organizations</a>
+    <a href="/organizations" class="directory-back-link">← Back to Organizations</a>
+    
 </main>
 
 <%- include('partials/footer') %>
