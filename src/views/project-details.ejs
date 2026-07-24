@@ -2,59 +2,57 @@
 
 <main class="detail-page-container">
     
-    <!-- Dynamic Header Layout containing name text and logo image side-by-side -->
-    <div class="org-detail-header-block">
-        <% 
-            let finalImageFile = "default-logo.png";
-            let checkName = (organization.name || "").toLowerCase();
-            if (checkName.includes("brightfuture")) { finalImageFile = "brightfuture-logo.png"; }
-            else if (checkName.includes("greenharvest")) { finalImageFile = "greenharvest-logo.png"; }
-            else if (checkName.includes("unityserve")) { finalImageFile = "unityserve-logo.png"; }
-        %>
-        <div class="org-detail-logo-frame">
-            <img class="org-detail-profile-logo" src="/images/<%= finalImageFile %>" alt="Organization Logo">
-        </div>
-        <h1 class="main-detail-title"><%= organization.name %></h1>
-    </div>
+    <!-- Page Header Title -->
+    <h1 class="main-detail-title"><%= project.title %></h1>
     
-    <!-- Overview Profile Block -->
-    <div class="info-details-card profile-summary-card">
+    <!-- Master Information Card -->
+    <div class="info-details-card">
+        
         <p class="detail-item-row">
-            <strong>Email:</strong> 
-            <a href="mailto:<%= organization.email %>" class="detail-inline-link"><%= organization.email %></a>
+            <strong>Date:</strong> 
+            <span class="detail-value-text">
+                <img class="detail-calendar-icon" src="/images/calendar.png" alt="Calendar Icon">
+                <%= project.date || project.project_date ? new Date(project.date || project.project_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }) : 'Date TBD' %>
+            </span>
         </p>
+        
+        <p class="detail-item-row">
+            <strong>Sponsored By:</strong> 
+            <a href="/organization/<%= project.organization_id %>" class="detail-inline-link">
+                <%= project.organization_name %>
+            </a>
+        </p>
+        
+        <p class="detail-item-row location-row">
+            <strong>Location:</strong> 
+            <img class="detail-location-icon" src="/images/location.png" alt="Location Icon">
+            <span class="detail-value-text"><%= project.location || "Location TBD" %></span>
+        </p>
+        
         <p class="detail-item-row description-block">
             <strong>Description:</strong> 
-            <span class="detail-value-text"><%= organization.description %></span>
+            <span class="detail-value-text"><%= project.description || "No description provided." %></span>
         </p>
-    </div>
-
-    <!-- Related Database Projects Section Grid Layout Loop -->
-    <div class="sub-listings-section">
-        <h2 class="sub-section-heading">Sponsored Service Projects</h2>
         
-        <% if (projects && projects.length > 0) { %>
-            <ul class="sub-records-list-wrapper">
-                <% projects.forEach(proj => { %>
-                    <li class="sub-record-card-item">
-                        <a href="/project/<%= proj.project_id %>" class="sub-record-item-title-link">
-                            <%= proj.title %>
-                        </a> 
-                        <span class="sub-record-item-meta-date">
-                            <!-- 🚀 FIXED: Replaced calendar emoji text with a professional local image icon -->
-                            <img class="detail-calendar-icon" src="public/images/calendar.png" alt="Calendar Icon">
-                            <%= new Date(proj.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }) %>
-                        </span>
-                    </li>
-                <% }); %>
-            </ul>
-        <% } else { %>
-            <p class="no-sub-records-msg">No service projects are currently hosted by this organization.</p>
-        <% } %>
+        <!-- Many-to-Many Category Tags Row -->
+        <div class="details-tags-wrapper">
+            <strong class="tags-label">Categories:</strong>
+            <div class="tags-list-group">
+                <% if (locals.categories && categories.length > 0) { %>
+                    <% categories.forEach(cat => { %>
+                        <a href="/category/<%= cat.category_id %>" class="category-pill-tag">
+                            <%= cat.category_name %>
+                        </a>
+                    <% }); %>
+                <% } else { %>
+                    <span class="empty-tag-msg">Uncategorized</span>
+                <% } %>
+            </div>
+        </div>
+        
     </div>
     
-    <a href="/organizations" class="directory-back-link">← Back to Organizations</a>
-    
+    <a href="/projects" class="directory-back-link">← Back to All Projects</a>
 </main>
 
 <%- include('partials/footer') %>
