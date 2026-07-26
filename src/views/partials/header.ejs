@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= locals.title ? title : 'Service Network' %></title>
+    <!-- Absolute root leading slash maps styles flawlessly on deeply nested subroutes -->
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
@@ -11,16 +12,22 @@
     <header class="global-site-header">
         <nav class="navigation-bar-container">
             
-                <a href="/">🌐 CSE 340 Service Network</a>
+            
+                <a href="/" class="brand-logo-link">
+                    <img class="site-brand-logo-img" src="/images/cse340-service-network.png" alt="CSE 340 Service Network Logo">
+                </a>
             </div>
+            
             <ul class="nav-links-group">
                 <li><a href="/">Home</a></li>
                 <li><a href="/organizations">Organizations</a></li>
                 <li><a href="/projects">Projects</a></li>
                 <li><a href="/categories">Categories</a></li>
             </ul>
+            
         </nav>
         
+        <!-- GLOBAL FLASH MESSAGE ALERT INJECTION GATEWAY MODULE -->
         <div class="global-alerts-portal-wrapper">
             <% if (locals.flash) { %>
                 <% const messages = flash(); %>
