@@ -1,7 +1,7 @@
 import db from './db.js';
 
 /**
- * 1. Retrieve all categories from the database (ADDED BACK)
+ * 1. Retrieve all categories from the database
  */
 export const getAllCategories = async () => {
     try {
@@ -15,13 +15,15 @@ export const getAllCategories = async () => {
 };
 
 /**
- * 2. Retrieve a single category by its ID (FIXED TYPO)
+ * 2. Retrieve a single category by its ID
  */
 export const getCategoryById = async (categoryId) => {
     const sql = 'SELECT category_id, category_name FROM category WHERE category_id = $1;';
     const result = await db.query(sql, [categoryId]);
-    return result.rows[0]; // Returns a single object instead of an array row index
+
+    return result.rows[0]; 
 };
+
 
 /**
  * 3. Retrieve all categories assigned to a specific service project
@@ -52,4 +54,28 @@ export const getProjectsByCategoryId = async (categoryId) => {
     `;
     const result = await db.query(sql, [categoryId]);
     return result.rows;
+};
+
+/**
+ * 5. Create a new category in the database (🚀 NEW FOR WEEK 4 ASSIGNMENT)
+ */
+export const createCategory = async (categoryName) => {
+    const sql = 'INSERT INTO category (category_name) VALUES ($1) RETURNING category_id;';
+    const result = await db.query(sql, [categoryName]);
+    if (result.rows.length === 0) {
+        throw new Error('Failed to create category record.');
+    }
+    return result.rows[0].category_id;
+};
+
+/**
+ * 6. Update an existing category name in the database (🚀 NEW FOR WEEK 4 ASSIGNMENT)
+ */
+export const updateCategory = async (categoryId, categoryName) => {
+    const sql = 'UPDATE category SET category_name = $1 WHERE category_id = $2 RETURNING category_id;';
+    const result = await db.query(sql, [categoryName, categoryId]);
+    if (result.rows.length === 0) {
+        throw new Error('Category not found or update failed.');
+    }
+    return result.rows[0].category_id;
 };

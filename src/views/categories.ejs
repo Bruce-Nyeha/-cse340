@@ -1,34 +1,35 @@
 <%- include('partials/header') %>
 
 <main class="categories-main-container">
-    
-    <!--  Page Title Header Element -->
     <h1 class="page-title">Service Categories</h1>
     
-    <!--  The Single Card Content Box Wrapper Container -->
     <div class="content-card-box">
-        
         <h2 class="welcome-heading">Available Categories</h2>
         <p class="mission-statement">Select a category below to explore its specific service projects and local volunteer opportunities:</p>
         
-        <!--  Bulleted Categories List Elements Group -->
         <ul class="categories-bullet-list">
             <% if (locals.categories && categories.length > 0) { %>
                 <% categories.forEach(category => { %>
                     <li class="category-bullet-item">
-                        <!-- Dynamically links directly to the dynamic details view page -->
-                        <a href="/category/<%= category.category_id %>" class="category-detail-link">
-                            <%= category.category_name %>
-                        </a>
+                        <div class="category-row-wrapper">
+                            <a href="/category/<%= category.category_id %>" class="category-detail-link">
+                                <%= category.category_name %>
+                            </a>
+                            <a href="/edit-category/<%= category.category_id %>" class="category-edit-link">
+                                Edit
+                            </a>
+                        </div>
                     </li>
                 <% }); %>
             <% } else { %>
-                <li>No categories are currently loaded into the database network.</li>
+                <li class="empty-list-msg">No categories are currently loaded into the database network.</li>
             <% } %>
         </ul>
         
+        <div class="action-footer-row">
+            <a href="/new-category" class="add-btn-link">+ Add a New Category</a>
+        </div>
     </div>
-
 </main>
 
 <%- include('partials/footer') %>

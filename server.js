@@ -3,6 +3,9 @@ import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import session from 'express-session'; 
+import flash from './src/middleware/flash.js'; 
+
 
 dotenv.config();
 
@@ -23,6 +26,14 @@ app.set('views', path.join(__dirname, 'src', 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session({ 
+    secret: process.env.SESSION_SECRET, 
+    resave: false, 
+    saveUninitialized: false,
+    cookie: { secure: false } // Set to true if using HTTPS
+ }));
+app.use(flash);
+
 
 // Global middleware to pass environment data cleanly to all EJS templates (e.g. footer.ejs)
 app.use((req, res, next) => {
