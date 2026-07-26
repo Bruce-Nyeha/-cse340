@@ -20,9 +20,9 @@ export const getAllCategories = async () => {
 export const getCategoryById = async (categoryId) => {
     const sql = 'SELECT category_id, category_name FROM category WHERE category_id = $1;';
     const result = await db.query(sql, [categoryId]);
-
-    return result.rows[0]; 
+    return result.rows && result.rows.length > 0 ? result.rows : [];
 };
+
 
 
 /**
