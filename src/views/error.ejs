@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+
+<main class="error-page-main-container">
+    <div class="error-content-card-box">
+        
+        <!-- Error Heading Banner -->
+        <h1 class="error-main-heading">An Error Has Occurred (<%= status %>)</h1>
+        
+        <!-- Error Dynamic Message Text Description -->
+        <p class="error-description-text"><%= message %></p>
+        
+        <!-- Redirect Home Action Button Link -->
+        <div class="error-action-row">
+            <a href="/" class="error-home-redirect-btn">Return to Home Screen</a>
+        </div>
+        
+    </div>
+</main>
+
+<%- include('partials/footer') %>

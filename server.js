@@ -6,10 +6,8 @@ import { fileURLToPath } from 'url';
 import session from 'express-session'; 
 import flash from './src/middleware/flash.js'; 
 
-
 dotenv.config();
 
-// Now your database configuration pool can safely read process.env.DB_URL
 import router from './src/routes.js';
 
 const app = express();
@@ -22,38 +20,46 @@ const __dirname = path.dirname(__filename);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src', 'views'));
 
-// Core factory assembly line assets middleware registration blocks
+// Core static assets directory pipeline mapping
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(session({ 
-    secret: process.env.SESSION_SECRET, 
-    resave: false, 
+
+// Express Session Module Middleware Setup with Fallback Token
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'bruce_nyeha_ultimate_secure_backup_session_secret_key_2026',
+    resave: false,
     saveUninitialized: false,
-    cookie: { secure: false } // Set to true if using HTTPS
- }));
+    cookie: { 
+        secure: false, 
+        maxAge: 3600000 
+    }
+}));
+
+// Mount global session-based notification flash arrays
 app.use(flash);
 
-
-// Global middleware to pass environment data cleanly to all EJS templates (e.g. footer.ejs)
+// Global middleware to pass environment variables cleanly to templates
 app.use((req, res, next) => {
     res.locals.NODE_ENV = process.env.NODE_ENV || 'development';
     next();
 });
 
-// Mount your modular application MVC routes
+// Mount application modular MVC controllers router pipeline
 app.use(router);
 
-// Centralized error-handling middleware that uses pure structural HTML text
+// 🚀 FIXED: Centralized error middleware now delegates entirely to an isolated EJS view template!
 app.use((err, req, res, next) => {
     console.error('Captured application error event stream:', err.message);
-    res.status(err.status || 500).send(`
-        <div class="error-container" style="font-family: system-ui, sans-serif; max-width: 600px; margin: 4rem auto; text-align: center;">
-            <h1 class="error-heading" style="color: #dc2626; font-size: 2rem; font-weight: 700;">Error Encountered</h1>
-            <p class="error-message" style="color: #4b5563; font-size: 1.1rem; margin-top: 0.5rem;">${err.message || 'Something went wrong on our end!'}</p>
-            <a href="/" class="error-home-link" style="display: inline-block; margin-top: 1.5rem; color: #1e3a8a; font-weight: 600; text-override: none; text-decoration: none;">Return Home</a>
-        </div>
-    `);
+    
+    const statusCode = err.status || 500;
+    const errorMessage = err.message || 'Something went wrong on our end!';
+    
+    res.status(statusCode).render('error', { 
+        title: 'Error Encountered', 
+        status: statusCode, 
+        message: errorMessage 
+    });
 });
 
 app.listen(port, () => {
