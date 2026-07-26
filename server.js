@@ -8,6 +8,7 @@ import flash from './src/middleware/flash.js';
 
 dotenv.config();
 
+// Import router only after core configuration assignments
 import router from './src/routes.js';
 
 const app = express();
@@ -20,14 +21,14 @@ const __dirname = path.dirname(__filename);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src', 'views'));
 
-// Core static assets directory pipeline mapping
+// Core factory assembly line assets static directory mapping
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Express Session Module Middleware Setup with Fallback Token
+// 🚀 FIXED: Express Session Module Setup reading strictly from the environment
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'bruce_nyeha_ultimate_secure_backup_session_secret_key_2026',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: { 
@@ -48,7 +49,7 @@ app.use((req, res, next) => {
 // Mount application modular MVC controllers router pipeline
 app.use(router);
 
-// 🚀 FIXED: Centralized error middleware now delegates entirely to an isolated EJS view template!
+// Centralized error middleware delegating entirely to an isolated EJS view template
 app.use((err, req, res, next) => {
     console.error('Captured application error event stream:', err.message);
     
