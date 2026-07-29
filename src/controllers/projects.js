@@ -1,45 +1,31 @@
-import { body, validationResult } from 'express-validator';
-import { getAllProjects, getProjectById } from '../models/projects.js';
+import { validationResult, body } from 'express-validator';
+import { getAllProjects, getProjectById, createProject, updateProject } from '../models/projects.js';
+import { getAllOrganizations } from '../models/organizations.js';
+import { getAllCategories, getCategoriesByProjectId, updateProjectCategories } from '../models/categories.js';
 
-// 1. GET /projects - List all upcoming projects
 export const showProjectsPage = async (req, res, next) => {
     try {
         const projects = await getAllProjects();
         res.render('projects', { title: 'Upcoming Service Projects', projects });
-    } catch (error) {
-        next(error);
-    }
+    } catch (error) { next(error); }
 };
 
-// 2. GET /project/:id - Single project detail view
 export const showProjectDetailPage = async (req, res, next) => {
     try {
-        const projectId = req.params.id;
-        const project = await getProjectById(projectId);
-        
-        if (!project) {
-            const err = new Error('Project not found');
-            err.status = 404;
-            return next(err);
-        }
-        
-        // Pass dummy categories array for now to ensure the view renders safely
-        res.render('project-details', { 
-            title: project.title, 
-            project, 
-            categories: [] 
-        });
-    } catch (error) {
-        next(error);
-    }
+        const project = await getProjectById(req.params.id);
+        if (!project) return res.status(404).send('Project not found');
+        const categories = await getCategoriesByProjectId(req.params.id);
+        res.render('project-details', { title: project.title, project, categories });
+    } catch (error) { next(error); }
 };
 
-// 3. GET /new-project - Show creation form
 export const showNewProjectForm = async (req, res, next) => {
-    res.render('new-project', { title: 'Add New Project' });
+    try {
+        const organizations = await getAllOrganizations();
+        res.render('new-project', { title: 'Create New Project', organizations });
+    } catch (error) { next(error); }
 };
 
-// 4. POST /new-project - Process creation form
 export const processNewProjectForm = async (req, res, next) => {
     try {
         const errors = validationResult(req);
@@ -47,25 +33,21 @@ export const processNewProjectForm = async (req, res, next) => {
             errors.array().forEach((e) => req.flash('error', e.msg));
             return res.redirect('/new-project');
         }
-        req.flash('success', 'Project created successfully!');
+        await createProject(req.body.title, req.body.description, req.body.date, req.body.location, req.body.organization_id);
+        req.flash('success', 'Service project created successfully!');
         res.redirect('/projects');
-    } catch (error) {
-        next(error);
-    }
+    } catch (error) { next(error); }
 };
 
-// 5. GET /edit-project/:id - Show edit form
 export const showEditProjectForm = async (req, res, next) => {
     try {
         const project = await getProjectById(req.params.id);
         if (!project) return res.status(404).send('Project not found');
-        res.render('edit-project', { title: 'Edit Project', project });
-    } catch (error) {
-        next(error);
-    }
+        const organizations = await getAllOrganizations();
+        res.render('edit-project', { title: 'Edit Service Project', project, organizations });
+    } catch (error) { next(error); }
 };
 
-// 6. POST /edit-project/:id - Process edit form
 export const processEditProjectForm = async (req, res, next) => {
     try {
         const errors = validationResult(req);
@@ -73,26 +55,34 @@ export const processEditProjectForm = async (req, res, next) => {
             errors.array().forEach((e) => req.flash('error', e.msg));
             return res.redirect(`/edit-project/${req.params.id}`);
         }
-        req.flash('success', 'Project updated successfully!');
+        await updateProject(req.params.id, req.body.title, req.body.description, req.body.date, req.body.location, req.body.organization_id);
+        req.flash('success', 'Service project updated successfully!');
         res.redirect('/projects');
-    } catch (error) {
-        next(error);
-    }
+    } catch (error) { next(error); }
 };
 
-// 🚀 REQUIRED EXPORT FIXED: Server-side validation rules array
+export const showAssignCategoriesForm = async (req, res, next) => {
+    try {
+        const project = await getProjectById(req.params.id);
+        if (!project) return res.status(404).send('Project not found');
+        const allCategories = await getAllCategories();
+        const currentCategories = await getCategoriesByProjectId(req.params.id);
+        res.render('assign-categories', { title: 'Assign Project Categories', project, allCategories, currentCategories });
+    } catch (error) { next(error); }
+};
+
+export const processAssignCategoriesForm = async (req, res, next) => {
+    try {
+        await updateProjectCategories(req.params.id, req.body.category_ids);
+        req.flash('success', 'Project category assignments saved successfully!');
+        res.redirect(`/project/${req.params.id}`);
+    } catch (error) { next(error); }
+};
+
 export const projectValidation = [
-    body('title')
-        .trim()
-        .notEmpty().withMessage('Project title is required.')
-        .isLength({ max: 255 }).withMessage('Title cannot exceed 255 characters.')
-        .escape(),
-    body('description')
-        .trim()
-        .notEmpty().withMessage('Description is required.')
-        .escape(),
-    body('location')
-        .trim()
-        .notEmpty().withMessage('Location is required.')
-        .escape()
+    body('title').trim().notEmpty().withMessage('Title is required.').escape(),
+    body('description').trim().notEmpty().withMessage('Description is required.').escape(),
+    body('date').notEmpty().withMessage('Valid date is required.'),
+    body('location').trim().notEmpty().withMessage('Location is required.').escape(),
+    body('organization_id').notEmpty().withMessage('Organization sponsor is required.')
 ];

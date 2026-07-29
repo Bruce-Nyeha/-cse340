@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+<main class="detail-page-container">
+    <h1 class="main-detail-title">Create New Service Project</h1>
+    <div class="info-details-card">
+        <form action="/new-project" method="POST" class="form-layout-box">
+            <div class="form-group-item">
+                <label for="title" class="form-element-label">Project Title</label>
+                <input type="text" id="title" name="title" class="form-text-input" required>
+            </div>
+            <div class="form-group-item">
+                <label for="description" class="form-element-label">Description</label>
+                <textarea id="description" name="description" class="form-text-input" required></textarea>
+            </div>
+            <div class="form-group-item">
+                <label for="date" class="form-element-label">Project Date</label>
+                <input type="date" id="date" name="date" class="form-text-input" required>
+            </div>
+            <div class="form-group-item">
+                <label for="location" class="form-element-label">Location</label>
+                <input type="text" id="location" name="location" class="form-text-input" required>
+            </div>
+            <div class="form-group-item">
+                <label for="organization_id" class="form-element-label">Sponsoring Organization</label>
+                <select id="organization_id" name="organization_id" class="form-text-input" required>
+                    <% if (locals.organizations) { %>
+                        <% organizations.forEach(org => { %>
+                            <option value="<%= org.organization_id %>"><%= org.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+            </div>
+            <div class="form-actions-row">
+                <button type="submit" class="submit-action-btn">Create Project</button>
+                <a href="/projects" class="cancel-action-link">Cancel</a>
+            </div>
+        </form>
+    </div>
+</main>
+<%- include('partials/footer') %>

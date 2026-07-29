@@ -1,3 +1,6 @@
+/* ==========================================================================
+   GLOBAL CONFIGURATIONS, VARIABLES, & RESET
+   ========================================================================== */
 :root {
   --primary-color: #1e3a8a;
   --secondary-color: #2563eb;
@@ -32,6 +35,9 @@ main, .main-content, .content-block {
   padding: 0 1.5rem;
 }
 
+/* ==========================================================================
+   NAVIGATION BAR & GLOBAL SITE HEADER BRANDING
+   ========================================================================== */
 nav {
   background-color: var(--primary-color);
   padding: 1rem 2rem;
@@ -39,23 +45,34 @@ nav {
   width: 100%;
 }
 
-nav ul {
+.navigation-bar-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul, .nav-links-group {
   list-style: none;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  margin: 0;
+  padding: 0;
 }
 
 @media (min-width: 600px) {
-  nav ul {
+  nav ul, .nav-links-group {
     flex-direction: row;
     gap: 2rem;
   }
 }
 
-nav ul li a {
+nav ul li a, .nav-links-group a {
   color: #e2e8f0;
   text-decoration: none;
   font-weight: 600;
@@ -66,98 +83,36 @@ nav ul li a {
   display: inline-block;
 }
 
-nav ul li a:hover,
-nav ul li a:focus {
+nav ul li a:hover, nav ul li a:focus,
+.nav-links-group a:hover, .nav-links-group a:focus {
   color: var(--white);
   background-color: rgba(255, 255, 255, 0.15);
   outline: none;
 }
 
-.content-block h2 {
-  color: var(--primary-color);
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.section-intro {
-  color: var(--text-muted);
-  font-size: 1.1rem;
-  margin-bottom: 2.5rem;
-}
-
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 2rem;
-}
-
-.category-card {
-  background-color: var(--white);
-  border: 1px solid #e2e8f0;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  transition: var(--transition);
-}
-
-.category-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.1);
-  border-color: var(--secondary-color);
-}
-
-.card-image-wrapper {
+.brand-logo-link {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  background-color: rgba(37, 99, 235, 0.1);
-  border-radius: 50%;
-  margin-bottom: 1.25rem;
+  text-decoration: none;
 }
 
-.category-icon-img {
+.site-brand-logo-img {
   width: 28px;
   height: 28px;
   object-fit: contain;
-  transition: var(--transition);
+  margin-right: 0.5rem;
+  flex-shrink: 0;
 }
 
-.category-card:hover .category-icon-img {
-  transform: scale(1.1) rotate(4deg);
+.brand-logo-text {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #1e3a8a;
 }
 
-.category-card h3 {
-  color: var(--primary-color);
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-}
-
-.category-card p {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-footer {
-  background-color: var(--bg-dark);
-  color: #94a3b8;
-  text-align: center;
-  padding: 1.5rem 1rem;
-  width: 100%;
-  border-top: 4px solid var(--secondary-color);
-  margin-top: auto;
-}
-
-footer p {
-  font-size: 0.95rem;
-  letter-spacing: 0.025em;
-}
-
-
-/* Homepage Layout Rule Set Definitions */
-
+/* ==========================================================================
+   HOMEPAGE MODULE PRESENTATION LAYOUT
+   ========================================================================== */
 .home-main-container {
   max-width: 800px;
   margin: 2rem auto;
@@ -223,9 +178,9 @@ footer p {
   background-color: #004085;
 }
 
-
-/* Organizations Grid Board Architecture Layout Rules */
-
+/* ==========================================================================
+   PARTNER ORGANIZATIONS DIRECTORY GRID BOARD
+   ========================================================================== */
 .orgs-main-container {
   max-width: 1100px;
   margin: 3rem auto;
@@ -241,7 +196,6 @@ footer p {
   margin-bottom: 3rem;
 }
 
-/* Three-column card grid alignment with auto-wrap capabilities */
 .orgs-grid-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -249,7 +203,6 @@ footer p {
   align-items: stretch;
 }
 
-/* Individual Card Blocks Container styling matches screenshot */
 .org-card-item {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
@@ -267,6 +220,15 @@ footer p {
   font-size: 1.2rem;
   font-weight: 700;
   margin: 0 0 1.5rem 0;
+}
+
+.org-card-title a {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.org-card-title a:hover {
+  text-decoration: underline;
 }
 
 .org-logo-box {
@@ -288,13 +250,13 @@ footer p {
   font-size: 0.85rem;
   line-height: 1.6;
   margin: 0 0 1.5rem 0;
-  flex-grow: 1; /* Pushes the contact email down so all cards stay equal height */
+  flex-grow: 1;
 }
 
 .org-card-contact {
   color: #334155;
   font-size: 0.85rem;
-  margin: 0;
+  margin: 0 0 1rem 0;
   border-top: 1px solid #f1f5f9;
   padding-top: 1rem;
 }
@@ -309,8 +271,14 @@ footer p {
   color: #0056b3;
 }
 
-/* 📅 Service Projects Responsive Card Grid Layout Rules */
+.card-actions-wrapper {
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
 
+/* ==========================================================================
+   UPCOMING SERVICE PROJECTS RESPONSE MATRIX CARDS
+   ========================================================================== */
 .projects-main-container {
   max-width: 1100px;
   margin: 3rem auto;
@@ -326,7 +294,6 @@ footer p {
   margin-bottom: 3rem;
 }
 
-/* Three-column responsive grid container spacing */
 .projects-grid-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -334,7 +301,6 @@ footer p {
   align-items: stretch;
 }
 
-/* Individual Card Item Styling matching your Organizations look */
 .project-card-item {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
@@ -366,6 +332,15 @@ footer p {
   margin: 0 0 0.5rem 0;
 }
 
+.project-card-title a {
+  color: #1e3a8a;
+  text-decoration: none;
+}
+
+.project-card-title a:hover {
+  text-decoration: underline;
+}
+
 .project-org-tag {
   display: block;
   font-size: 0.9rem;
@@ -387,64 +362,9 @@ footer p {
 .project-card-footer {
   border-top: 1px solid #f1f5f9;
   padding-top: 1rem;
-}
-
-.project-loc {
-  color: #475569;
-  font-size: 0.85rem;
-  font-weight: 500;
-  margin: 0;
-}
-
-
-/* 🏷️ Categories Single-Card Bullet List Layout Rules */
-
-.categories-main-container {
-  max-width: 800px;
-  margin: 3rem auto;
-  padding: 0 1.5rem;
-  font-family: system-ui, -apple-system, sans-serif;
-}
-
-.categories-main-container .page-title {
-  color: #1e3a8a;
-  font-size: 1.75rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-/* Formats the bullet layout list inside the single block card elements */
-.categories-bullet-list {
-  padding-left: 1.5rem;
-  margin: 1.5rem 0 0 0;
-}
-
-.category-bullet-item {
-  margin-bottom: 0.85rem;
-  color: #334155;
-  font-size: 1rem;
-  list-style-type: disc; /* Forces clean standard bullet markings */
-}
-
-.category-detail-link {
-  color: #0056b3;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.2s;
-}
-
-.category-detail-link:hover {
-  text-decoration: underline;
-  color: #004085;
-}
-
-
-/* 📍 Projects Card Footer Image Pin Alignment Rules */
-
-.project-card-footer {
-  border-top: 1px solid #f1f5f9;
-  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .project-loc {
@@ -453,19 +373,20 @@ footer p {
   font-weight: 500;
   margin: 0;
   display: flex;
-  align-items: center; /* Centers the icon perfectly with your text baseline */
+  align-items: center;
 }
 
 .project-loc .location-icon {
-  width: 16px;       /* Hardcoded professional icon width boundary dimensions */
-  height: 16px;      /* Hardcoded professional icon height boundary dimensions */
+  width: 16px;
+  height: 16px;
   object-fit: contain;
-  margin-right: 0.5rem; /* Pushes the location text text over evenly */
-  flex-shrink: 0;    /* Prevents the image pin from squishing on thin layout layers */
+  margin-right: 0.5rem;
+  flex-shrink: 0;
 }
 
-/* 🏢 Single Item Details Panel Layout Architecture Definitions */
-
+/* ==========================================================================
+   SINGLE ITEM DETAIL BOARDS & METADATA ROWS
+   ========================================================================== */
 .detail-page-container {
   max-width: 800px;
   margin: 3rem auto;
@@ -536,6 +457,16 @@ footer p {
   flex-shrink: 0;
 }
 
+.detail-calendar-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  margin-right: 0.35rem;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .description-block {
   line-height: 1.6;
   margin-bottom: 0;
@@ -555,92 +486,6 @@ footer p {
   text-decoration: underline;
 }
 
-/* Category Tag Elements Architecture */
-.details-tags-wrapper {
-  border-top: 1px solid #f1f5f9;
-  padding-top: 1.5rem;
-  margin-top: 2rem;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.tags-label {
-  color: #334155;
-}
-
-.tags-list-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.category-pill-tag {
-  display: inline-block;
-  background-color: #f1f5f9;
-  color: #1e3a8a;
-  padding: 0.25rem 0.75rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-
-.category-pill-tag:hover {
-  background-color: #e2e8f0;
-}
-
-.empty-tag-msg {
-  color: #64748b;
-}
-
-/* Sub-projects list configurations inside organization view */
-.sub-listings-section {
-  margin-top: 2.5rem;
-}
-
-.sub-section-heading {
-  color: #1e3a8a;
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 0 0 1.5rem 0;
-}
-
-.sub-records-list-wrapper {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sub-record-card-item {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-}
-
-.sub-record-item-title-link {
-  color: #0056b3;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 1.1rem;
-}
-
-.sub-record-item-title-link:hover {
-  text-decoration: underline;
-}
-
-.sub-record-item-meta-date {
-  display: block;
-  color: #64748b;
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
-}
-
 .directory-back-link {
   display: inline-block;
   margin-top: 2rem;
@@ -653,177 +498,13 @@ footer p {
   text-decoration: underline;
 }
 
-/* 📅 Sponsored Sub-records List Image Calendar Positioning Rules */
-
-.sub-record-item-meta-date {
-  display: flex;
-  align-items: center; /* Aligns the icon perfectly with your text baseline */
-  color: #64748b;
-  font-size: 0.85rem;
-  margin-top: 0.4rem;
-}
-
-.sub-record-item-meta-date .detail-calendar-icon {
-  width: 14px;        /* Matches the text size scale elegantly */
-  height: 14px;
-  object-fit: contain;
-  margin-right: 0.35rem; /* Spacing between the image and text */
-  flex-shrink: 0;     /* Prevents squishing on thin layout frames */
-}
-
-
-/* 🏷️ Categories Directory Layout Architecture */
-.categories-main-container {
-  max-width: 800px;
-  margin: 3rem auto;
-  padding: 0 1.5rem;
-}
-
-.categories-main-container .page-title {
-  color: #1e3a8a;
-  font-size: 1.75rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.content-card-box {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  padding: 2.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
-}
-
-.categories-bullet-list {
-  padding-left: 1.5rem;
-  margin: 0 0 2rem 0;
-  list-style-type: disc;
-}
-
-.category-bullet-item {
-  margin-bottom: 1rem;
-  color: #334155;
-  font-size: 1.1rem;
-}
-
-.category-row-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 500px;
-}
-
-.category-detail-link {
-  color: #0056b3;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.category-edit-link {
-  font-size: 0.85rem;
-  color: #64748b;
-  text-decoration: none;
-  border: 1px solid #cbd5e1;
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-  background: #f8fafc;
-}
-
-.action-footer-row {
+/* ==========================================================================
+   MANY-TO-MANY SECTIONS & CATEGORY PILL TAGS
+   ========================================================================== */
+.details-tags-wrapper {
   border-top: 1px solid #f1f5f9;
   padding-top: 1.5rem;
-}
+  margin-top: 2rem;
 
-.add-btn-link {
-  display: inline-block;
-  background: #1e3a8a;
-  color: #ffffff;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 0.95rem;
-}
-
-/* 🚨 Global Flash Session Message Status Display Banners */
-.global-alerts-portal-wrapper {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-.alert {
-  padding: 1rem;
-  margin-top: 1rem;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.95rem;
-  border: 1px solid transparent;
-}
-
-.alert.success {
-  color: #155724;
-  background-color: #d4edda;
-  border-color: #c3e6cb;
-}
-
-.alert.error {
-  color: #721c24;
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-}
-
-
-/* 🚨 Isolated Error Page Framework Structural Alignment Rules */
-
-.error-page-main-container {
-  max-width: 600px;
-  margin: 4rem auto;
-  padding: 0 1.5rem;
-  font-family: system-ui, -apple-system, sans-serif;
-}
-
-.error-content-card-box {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 3rem 2rem;
-  text-align: center;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-}
-
-.error-main-heading {
-  color: #dc2626;
-  font-size: 1.75rem;
-  font-weight: 700;
-  margin: 0 0 1rem 0;
-}
-
-.error-description-text {
-  color: #4b5563;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin: 0 0 2rem 0;
-}
-
-.error-action-row {
-  border-top: 1px solid #f1f5f9;
-  padding-top: 1.5rem;
-}
-
-.error-home-redirect-btn {
-  display: inline-block;
-  background-color: #1e3a8a;
-  color: #ffffff;
-  padding: 0.6rem 1.4rem;
-  border-radius: 6px;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 0.95rem;
-  transition: background-color 0.2s;
-}
-
-.error-home-redirect-btn:hover {
-  background-color: #1d4ed8;
-}
+  display: flex;align-items: center;flex-wrap: wrap;gap: 0.5rem;}.tags-label {color: #334155;}.tags-list-group {display: flex;flex-wrap: wrap;gap: 0.5rem;}.category-pill-tag {display: inline-block;background-color: #f1f5f9;color: #1e3a8a;padding: 0.25rem 0.75rem;border-radius: 4px;font-size: 0.85rem;font-weight: 600;text-decoration: none;transition: background-color 0.2s;}.category-pill-tag:hover {background-color: #e2e8f0;}.empty-tag-msg {color: #64748b;}.sub-listings-section {margin-top: 2.5rem;}.sub-section-heading {color: #1e3a8a;font-size: 1.5rem;font-weight: 700;margin: 0 0 1.5rem 0;}.sub-records-list-wrapper {list-style-type: none;padding: 0;margin: 0;}.sub-record-card-item {background-color: #ffffff;border: 1px solid #e2e8f0;border-radius: 6px;padding: 1.25rem;margin-bottom: 1rem;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);}.sub-record-item-title-link {color: #0056b3;font-weight: 600;text-decoration: none;font-size: 1.1rem;}.sub-record-item-title-link:hover {text-decoration: underline;}.sub-record-item-meta-date {display: flex;align-items: center;color: #64748b;font-size: 0.85rem;margin-top: 0.4rem;}/* ==========================================================================CATEGORIES UTILITY INDEX VIEW DIRECTORY========================================================================== */.categories-main-container {max-width: 800px;margin: 3rem auto;padding: 0 1.5rem;}.categories-main-container .page-title {color: #1e3a8a;font-size: 1.75rem;font-weight: 700;text-align: center;margin-bottom: 2rem;}.content-card-box {background: #ffffff;border: 1px solid #e2e8f0;padding: 2.5rem;border-radius: 8px;box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);}.categories-bullet-list {padding-left: 1.5rem;margin: 0 0 2rem 0;list-style-type: disc;}.category-bullet-item {margin-bottom: 1rem;color: #334155;font-size: 1.1rem;}.category-row-wrapper {display: flex;justify-content: space-between;align-items: center;max-width: 500px;}.category-detail-link {color: #0056b3;text-decoration: none;font-weight: 600;}.category-edit-link {font-size: 0.85rem;color: #64748b;text-decoration: none;border: 1px solid #cbd5e1;padding: 0.2rem 0.6rem;border-radius: 4px;background: #f8fafc;transition: all 0.2s ease-in-out;}.category-edit-link:hover {background-color: #e2e8f0;color: var(--primary-color);}.action-footer-row {border-top: 1px solid #f1f5f9;padding-top: 1.5rem;margin-top: 1rem;margin-bottom: 1.5rem;}.add-btn-link {display: inline-block;background: #1e3a8a;color: #ffffff;padding: 0.6rem 1.2rem;border-radius: 6px;font-weight: 600;text-decoration: none;font-size: 0.95rem;transition: background-color 0.2s ease-in-out;}.add-btn-link:hover {background-color: var(--secondary-color);}/* ==========================================================================INPUT SYSTEM FORMS LAYOUTS & ACTION MATRIX BUTTONS========================================================================== */.form-layout-box {display: flex;flex-direction: column;gap: 1.25rem;}.form-group-item {display: flex;flex-direction: column;gap: 0.4rem;}.form-element-label {font-weight: 600;color: #334155;font-size: 0.9rem;}.form-text-input {padding: 0.6rem;border: 1px solid #cbd5e1;border-radius: 6px;font-size: 1rem;font-family: inherit;color: var(--text-main);background-color: var(--white);width: 100%;}.form-text-input:focus {outline: none;border-color: var(--secondary-color);box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);}textarea.form-text-input {min-height: 120px;resize: vertical;}select.form-text-input {cursor: pointer;}.form-actions-row {display: flex;align-items: center;gap: 1rem;margin-top: 1rem;}.submit-action-btn {background-color: #1e3a8a;color: var(--white);padding: 0.6rem 1.2rem;border: none;border-radius: 6px;font-weight: 600;cursor: pointer;transition: background-color 0.2s ease-in-out;}.submit-action-btn:hover {background-color: var(--secondary-color);}.cancel-action-link {color: #64748b;text-decoration: none;font-weight: 500;font-size: 0.95rem;}.cancel-action-link:hover {color: var(--text-main);text-decoration: underline;}/* ==========================================================================CHECKBOX MULTI-ASSIGNMENT INTERFACE ELEMENTS========================================================================== */.checkbox-group-container {display: flex;flex-direction: column;gap: 0.75rem;margin: 1.5rem 0;}.checkbox-row-item {display: flex;align-items: center;gap: 0.5rem;font-size: 1rem;color: #334155;}.checkbox-row-item input[type="checkbox"] {width: 18px;height: 18px;cursor: pointer;accent-color: var(--secondary-color);}.checkbox-row-item label {cursor: pointer;user-select: none;}/* ==========================================================================GLOBAL SESSION FLASH MESSAGES DISPLAY ALERTS========================================================================== */.global-alerts-portal-wrapper {max-width: 800px;margin: 0 auto;padding: 0 1.5rem;}.alert {padding: 1rem;margin-top: 1rem;border-radius: 6px;font-weight: 500;font-size: 0.95rem;border: 1px solid transparent;}.alert.success {color: #155724;background-color: #d4edda;border-color: #c3e6cb;}.alert.error {color: #721c24;background-color: #f8d7da;border-color: #f5c6cb;}/* ==========================================================================ISOLATED CUSTOM ERROR ROUTE TEMPLATES========================================================================== */.error-page-main-container {max-width: 600px;margin: 4rem auto;padding: 0 1.5rem;font-family: system-ui, -apple-system, sans-serif;}.error-content-card-box {background-color: #ffffff;border: 1px solid #e2e8f0;border-radius: 8px;padding: 3rem 2rem;text-align: center;box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);}.error-main-heading {color: #dc2626;font-size: 1.75rem;font-weight: 700;margin: 0 0 1rem 0;}.error-description-text {color: #4b5563;font-size: 1.1rem;line-height: 1.6;margin: 0 0 2rem 0;}.error-action-row {border-top: 1px solid #f1f5f9;padding-top: 1.5rem;}.error-home-redirect-btn {display: inline-block;background-color: #1e3a8a;color: #ffffff;padding: 0.6rem 1.4rem;border-radius: 6px;font-weight: 600;text-decoration: none;font-size: 0.95rem;transition: background-color 0.2s;}.error-home-redirect-btn:hover {background-color: #1d4ed8;}/* ==========================================================================GLOBAL FOOTER WRAPPER BRANDING LIMITS========================================================================== */footer {background-color: var(--bg-dark);color: #94a3b8;text-align: center;padding: 1.5rem 1rem;width: 100%;border-top: 4px solid var(--secondary-color);margin-top: auto;}
+  footer p {font-size: 0.95rem;letter-spacing: 0.025em;}

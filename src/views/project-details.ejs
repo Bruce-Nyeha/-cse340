@@ -1,18 +1,14 @@
 <%- include('partials/header') %>
 
 <main class="detail-page-container">
-    
-    <!-- Page Header Title -->
     <h1 class="main-detail-title"><%= project.title %></h1>
     
-    <!-- Master Information Card -->
     <div class="info-details-card">
-        
         <p class="detail-item-row">
             <strong>Date:</strong> 
             <span class="detail-value-text">
                 <img class="detail-calendar-icon" src="/images/calendar.png" alt="Calendar Icon">
-                <%= project.date || project.project_date ? new Date(project.date || project.project_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }) : 'Date TBD' %>
+                <%= project.date ? new Date(project.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }) : 'Date TBD' %>
             </span>
         </p>
         
@@ -26,15 +22,14 @@
         <p class="detail-item-row location-row">
             <strong>Location:</strong> 
             <img class="detail-location-icon" src="/images/location.png" alt="Location Icon">
-            <span class="detail-value-text"><%= project.location || "Location TBD" %></span>
+            <span class="detail-value-text"><%= project.location %></span>
         </p>
         
         <p class="detail-item-row description-block">
             <strong>Description:</strong> 
-            <span class="detail-value-text"><%= project.description || "No description provided." %></span>
+            <span class="detail-value-text"><%= project.description %></span>
         </p>
         
-        <!-- Many-to-Many Category Tags Row -->
         <div class="details-tags-wrapper">
             <strong class="tags-label">Categories:</strong>
             <div class="tags-list-group">
@@ -50,6 +45,9 @@
             </div>
         </div>
         
+        <div class="assignment-link-row" style="margin-top: 2rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem;">
+            <a href="/assign-categories/<%= project.project_id %>" class="add-btn-link">⚙ Assign / Update Categories</a>
+        </div>
     </div>
     
     <a href="/projects" class="directory-back-link">← Back to All Projects</a>

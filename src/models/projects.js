@@ -1,20 +1,15 @@
-// src/models/projects.js
 import db from './db.js';
 
-/**
- * 1. Retrieve all service projects with their sponsoring organization names
- */
 export const getAllProjects = async () => {
     const sql = `
-        SELECT sp.project_id, sp.title, sp.date, sp.description, sp.location, o.name as organization_name 
-        FROM service_project sp 
-        JOIN organization o ON sp.organization_id = o.organization_id 
+        SELECT sp.*, o.name as organization_name 
+        FROM service_project sp
+        JOIN organization o ON sp.organization_id = o.organization_id
         ORDER BY sp.date;
     `;
     const result = await db.query(sql);
     return result.rows;
 };
-
 
 export const getProjectById = async (projectId) => {
     const sql = `
@@ -24,6 +19,17 @@ export const getProjectById = async (projectId) => {
         WHERE sp.project_id = $1;
     `;
     const result = await db.query(sql, [projectId]);
-    
-    return result.rows[0]; 
+    return result.rows[0];
+};
+
+export const createProject = async (title, description, date, location, organization_id) => {
+    const sql = 'INSERT INTO service_project (title, description, date, location, organization_id) VALUES ($1, $2, $3, $4, $5) RETURNING project_id;';
+    const result = await db.query(sql, [title, description, date, location, organization_id]);
+    return result.rows[0].project_id;
+};
+
+export const updateProject = async (projectId, title, description, date, location, organization_id) => {
+    const sql = 'UPDATE service_project SET title = $1, description = $2, date = $3, location = $4, organization_id = $5 WHERE project_id = $6 RETURNING project_id;';
+    const result = await db.query(sql, [title, description, date, location, organization_id, projectId]);
+    return result.rows[0].project_id;
 };

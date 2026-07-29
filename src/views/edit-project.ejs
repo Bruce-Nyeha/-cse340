@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+<main class="detail-page-container">
+    <h1 class="main-detail-title">Edit Service Project</h1>
+    <div class="info-details-card">
+        <form action="/edit-project/<%= project.project_id %>" method="POST" class="form-layout-box">
+            <div class="form-group-item">
+                <label for="title" class="form-element-label">Project Title</label>
+                <input type="text" id="title" name="title" class="form-text-input" value="<%= project.title %>" required>
+            </div>
+            <div class="form-group-item">
+                <label for="description" class="form-element-label">Description</label>
+                <textarea id="description" name="description" class="form-text-input" required><%= project.description %></textarea>
+            </div>
+            <div class="form-group-item">
+                <label for="date" class="form-element-label">Project Date</label>
+                <input type="date" id="date" name="date" class="form-text-input" value="<%= project.date ? new Date(project.date).toISOString().split('T')[0] : '' %>" required>
+            </div>
+            <div class="form-group-item">
+                <label for="location" class="form-element-label">Location</label>
+                <input type="text" id="location" name="location" class="form-text-input" value="<%= project.location %>" required>
+            </div>
+            <div class="form-group-item">
+                <label for="organization_id" class="form-element-label">Sponsoring Organization</label>
+                <select id="organization_id" name="organization_id" class="form-text-input" required>
+                    <% if (locals.organizations) { %>
+                        <% organizations.forEach(org => { %>
+                            <option value="<%= org.organization_id %>" <%= org.organization_id === project.organization_id ? 'selected' : '' %>><%= org.name %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+            </div>
+            <div class="form-actions-row">
+                <button type="submit" class="submit-action-btn">Update Project</button>
+                <a href="/projects" class="cancel-action-link">Cancel</a>
+            </div>
+        </form>
+    </div>
+</main>
+<%- include('partials/footer') %>

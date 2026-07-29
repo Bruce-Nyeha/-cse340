@@ -2,41 +2,44 @@
 
 <main class="orgs-main-container">
     <h1 class="page-title">Our Partner Organizations</h1>
+    
+    <div class="action-footer-row">
+        <a href="/new-organization" class="add-btn-link">+ Register New Organization</a>
+    </div>
+
     <div class="orgs-grid-wrapper">
-        
         <% if (locals.organizations && organizations.length > 0) { %>
             <% organizations.forEach(org => { 
-                /* Directly forces filenames to align perfectly with your sidebar file list */
                 let finalImageFile = "default-logo.png";
-                let checkName = (org.name || org.organization_name || "").toLowerCase();
-                
-                if (checkName.includes("brightfuture")) {
-                    finalImageFile = "brightfuture-logo.png";
-                } else if (checkName.includes("greenharvest")) {
-                    finalImageFile = "greenharvest-logo.png";
-                } else if (checkName.includes("unityserve")) {
-                    finalImageFile = "unityserve-logo.png";
-                }
+                let checkName = (org.name || "").toLowerCase();
+                if (checkName.includes("brightfuture")) { finalImageFile = "brightfuture-logo.png"; }
+                else if (checkName.includes("greenharvest")) { finalImageFile = "greenharvest-logo.png"; }
+                else if (checkName.includes("unityserve")) { finalImageFile = "unityserve-logo.png"; }
             %>
                 <div class="org-card-item">
-                    <h3 class="org-card-title"><%= org.name || org.organization_name || "Partner Organization" %></h3>
+                    <h3 class="org-card-title">
+                        <a href="/organization/<%= org.organization_id %>">
+                            <%= org.name %>
+                        </a>
+                    </h3>
                     
                     <div class="org-logo-box">
-                        <!-- FIXED PATH: Absolute leading forward slash / keeps media loading flawlessly -->
-                        <img class="org-card-logo" src="/images/<%= finalImageFile %>" alt="Organization Logo">
+                        <a href="/organization/<%= org.organization_id %>">
+                            <img class="org-card-logo" src="/images/<%= finalImageFile %>" alt="Organization Logo">
+                        </a>
                     </div>
                     
-                    <p class="org-card-description"><%= org.description || "A dedicated community organization supporting local outreach initiatives." %></p>
+                    <p class="org-card-description"><%= org.description %></p>
+                    <p class="org-card-contact"><strong>Email:</strong> <%= org.email %></p>
                     
-                    <p class="org-card-contact">
-                        <strong>Email:</strong> <a href="mailto:<%= org.email || org.organization_email %>"><%= org.email || org.organization_email || "contact@service.org" %></a>
-                    </p>
+                    <div class="card-actions-wrapper">
+                        <a href="/edit-organization/<%= org.organization_id %>" class="category-edit-link">Edit Profile</a>
+                    </div>
                 </div>
-            <% }) /* Closes the forEach loop safely */ %>
+            <% }) %>
         <% } else { %>
             <p>No organizations found in the database.</p>
-        <% } /* Closes the if statement safely */ %>
-        
+        <% } %>
     </div>
 </main>
 

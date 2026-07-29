@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+<main class="detail-page-container">
+    <h1 class="main-detail-title">Assign Categories to: <%= project.title %></h1>
+    <div class="info-details-card">
+        <form action="/assign-categories/<%= project.project_id %>" method="POST" class="form-layout-box">
+            <p class="form-instruction-text">Check the boxes for all categories that apply to this project:</p>
+            
+            <div class="checkbox-group-container" style="display: flex; flex-direction: column; gap: 0.75rem; margin: 1.5rem 0;">
+                <% if (locals.allCategories) { %>
+                    <% allCategories.forEach(cat => { 
+                        let isChecked = currentCategories.some(c => c.category_id === cat.category_id);
+                    %>
+                        <div class="checkbox-row-item" style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" id="cat_<%= cat.category_id %>" name="category_ids" value="<%= cat.category_id %>" <%= isChecked ? 'checked' : '' %>>
+                            <label for="cat_<%= cat.category_id %>"><%= cat.category_name %></label>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </div>
+
+            <div class="form-actions-row">
+                <button type="submit" class="submit-action-btn">Save Assignments</button>
+                <a href="/project/<%= project.project_id %>" class="cancel-action-link">Cancel</a>
+            </div>
+        </form>
+    </div>
+</main>
+<%- include('partials/footer') %>
