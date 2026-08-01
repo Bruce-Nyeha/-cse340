@@ -43,6 +43,7 @@ app.use(flash);
 // Global middleware to pass environment variables cleanly to templates
 app.use((req, res, next) => {
     res.locals.NODE_ENV = process.env.NODE_ENV || 'development';
+    res.locals.user = req.session.user || null;
     next();
 });
 

@@ -1,39 +1,25 @@
 // src/models/db.js
 import pg from 'pg';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-//  CRITICAL FIX: Explicitly load the local .env variables directly inside this module!
-dotenv.config();
+//  Force an explicit absolute path lookup to find your .env file coordinates
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const { Pool } = pg;
 
-// Standard connection pool utilizing your active environment credentials string
-const pool = new Pool({
+if (!process.env.DB_URL) {
+    console.error(' CRITICAL SCHEDULER BLOCK: process.env.DB_URL is missing or undefined! Check your local .env configuration parameters.');
+}
+
+export const db = new Pool({
     connectionString: process.env.DB_URL,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : { rejectUnauthorized: false }
 });
 
-// Direct export wrapper ensuring all your application modules can read data smoothly
-export const db = {
-    async query(text, params) {
-        return await pool.query(text, params);
-    },
-    async close() {
-        await pool.end();
-    }
+export const query = async (text, params) => {
+    return db.query(text, params);
 };
-
-export const testConnection = async () => {
-    try {
-        const result = await pool.query('SELECT NOW() as current_time');
-        console.log('Database connection successful:', result.rows[0].current_time);
-        return true;
-    } catch (error) {
-        console.error('Database connection failed:', error.message);
-        throw error;
-    }
-};
-
-export default db;

@@ -5,15 +5,20 @@
         <form action="/new-organization" method="POST" class="form-layout-box">
             <div class="form-group-item">
                 <label for="name" class="form-element-label">Organization Name</label>
-                <input type="text" id="name" name="name" class="form-text-input" required>
+                <input type="text" id="name" name="name" class="form-text-input" placeholder="e.g. UnityServe" required>
             </div>
             <div class="form-group-item">
                 <label for="email" class="form-element-label">Contact Email</label>
-                <input type="email" id="email" name="email" class="form-text-input" required>
+                <input type="email" id="email" name="email" class="form-text-input" placeholder="contact@unityserve.org" required>
             </div>
             <div class="form-group-item">
                 <label for="description" class="form-element-label">Description</label>
-                <textarea id="description" name="description" class="form-text-input" required></textarea>
+                <textarea id="description" name="description" class="form-text-input" placeholder="Enter service background mission..." required></textarea>
+            </div>
+            <!-- 🚀 ADDED: Logo URL Field String Vector Input -->
+            <div class="form-group-item">
+                <label for="logo" class="form-element-label">Logo Profile Graphic URL / Filename</label>
+                <input type="text" id="logo" name="logo" class="form-text-input" placeholder="default-logo.png" required>
             </div>
             <div class="form-actions-row">
                 <button type="submit" class="submit-action-btn">Create Organization</button>

@@ -1,0 +1,47 @@
+<%- include('partials/header') %>
+
+<main class="auth-page-main-container">
+    <div class="auth-content-card-box">
+        
+        <h1 class="auth-main-heading"><%= title %></h1>
+        
+        <form action="/login" method="POST" class="form-layout-box">
+            
+            <div class="form-group-item">
+                <label for="email" class="form-element-label">Email Address</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="form-text-input" 
+                    placeholder="example@byui.edu" 
+                    required 
+                />
+            </div>
+            
+            <div class="form-group-item">
+                <label for="password" class="form-element-label">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    class="form-text-input" 
+                    placeholder="Enter your account password" 
+                    required 
+                />
+            </div>
+            
+            <div class="form-actions-row">
+                <button type="submit" class="submit-action-btn">Log In</button>
+            </div>
+            
+        </form>
+        
+        <p class="auth-switch-prompt-text" style="margin-top: 1.5rem; font-size: 0.9rem; color: #475569;">
+            Don't have an account yet? <a href="/register" style="color: #2563eb; text-decoration: none; font-weight: 600;">Register here</a>.
+        </p>
+        
+    </div>
+</main>
+
+<%- include('partials/footer') %>

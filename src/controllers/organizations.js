@@ -1,3 +1,4 @@
+// src/controllers/organizations.js
 import { validationResult, body } from 'express-validator';
 import { 
     getAllOrganizations, 
@@ -16,14 +17,15 @@ export const showOrganizationsPage = async (req, res, next) => {
 
 export const showOrganizationDetailPage = async (req, res, next) => {
     try {
-        const organization = await getOrganizationById(req.params.id);
+        const orgRows = await getOrganizationById(req.params.id);
+        const organization = orgRows[0];
         if (!organization) return res.status(404).send('Organization not found');
         const projects = await getProjectsByOrganizationId(req.params.id);
         res.render('organization-details', { title: organization.name, organization, projects });
     } catch (error) { next(error); }
 };
 
-export const showNewOrganizationForm = async (req, res, next) => {
+export const showNewOrganizationForm = (req, res) => {
     res.render('new-organization', { title: 'Register New Organization' });
 };
 
@@ -34,7 +36,7 @@ export const processNewOrganizationForm = async (req, res, next) => {
             errors.array().forEach((e) => req.flash('error', e.msg));
             return res.redirect('/new-organization');
         }
-        await createOrganization(req.body.name, req.body.email, req.body.description);
+        await createOrganization(req.body.name, req.body.email, req.body.description, req.body.logo);
         req.flash('success', 'Organization registered successfully!');
         res.redirect('/organizations');
     } catch (error) { next(error); }
@@ -42,7 +44,8 @@ export const processNewOrganizationForm = async (req, res, next) => {
 
 export const showEditOrganizationForm = async (req, res, next) => {
     try {
-        const organization = await getOrganizationById(req.params.id);
+        const orgRows = await getOrganizationById(req.params.id);
+        const organization = orgRows[0];
         if (!organization) return res.status(404).send('Organization not found');
         res.render('edit-organization', { title: 'Edit Organization Profile', organization });
     } catch (error) { next(error); }
@@ -55,7 +58,7 @@ export const processEditOrganizationForm = async (req, res, next) => {
             errors.array().forEach((e) => req.flash('error', e.msg));
             return res.redirect(`/edit-organization/${req.params.id}`);
         }
-        await updateOrganization(req.params.id, req.body.name, req.body.email, req.body.description);
+        await updateOrganization(req.params.id, req.body.name, req.body.email, req.body.description, req.body.logo);
         req.flash('success', 'Organization profile updated successfully!');
         res.redirect('/organizations');
     } catch (error) { next(error); }
@@ -64,5 +67,6 @@ export const processEditOrganizationForm = async (req, res, next) => {
 export const organizationValidation = [
     body('name').trim().notEmpty().withMessage('Name is required.').escape(),
     body('email').trim().isEmail().withMessage('Valid email is required.').normalizeEmail(),
-    body('description').trim().notEmpty().withMessage('Description is required.').escape()
+    body('description').trim().notEmpty().withMessage('Description is required.').escape(),
+    body('logo').trim().notEmpty().withMessage('Logo url string is required.').escape()
 ];

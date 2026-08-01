@@ -1,13 +1,13 @@
-import { body, validationResult } from 'express-validator';
+// src/controllers/categories.js
+import { validationResult, body } from 'express-validator';
 import { 
     getAllCategories, 
     getCategoryById, 
     getProjectsByCategoryId,
-    createCategory, 
-    updateCategory 
+    createCategory,
+    updateCategory
 } from '../models/categories.js';
 
-// 1. GET /categories - List categories
 export const showCategoriesPage = async (req, res, next) => {
     try {
         const categories = await getAllCategories();
@@ -15,34 +15,21 @@ export const showCategoriesPage = async (req, res, next) => {
     } catch (error) { next(error); }
 };
 
-// 2. GET /category/:id - Show projects for a specific category (🚀 REQUIRED EXPORT FIXED)
 export const showCategoryDetailsPage = async (req, res, next) => {
     try {
-        const categoryId = req.params.id;
-        const categoryRows = await getCategoryById(categoryId);
-        const category = categoryRows[0]; // Extract the singular category object
+        const categoryRows = await getCategoryById(req.params.id);
+        const category = categoryRows[0]; // 🚀 FIXED: Extract the single row object out of the array matrix
+        if (!category) return res.status(404).send('Category not found');
         
-        if (!category) {
-            const err = new Error('Category not found');
-            err.status = 404;
-            return next(err);
-        }
-        
-        const projects = await getProjectsByCategoryId(categoryId);
-        res.render('category-details', { 
-            title: `${category.category_name} Projects`, 
-            category, 
-            projects 
-        });
+        const projects = await getProjectsByCategoryId(req.params.id);
+        res.render('category-details', { title: category.category_name, category, projects });
     } catch (error) { next(error); }
 };
 
-// 3. GET /new-category - Show form
-export const showNewCategoryForm = async (req, res, next) => {
+export const showNewCategoryForm = (req, res) => {
     res.render('new-category', { title: 'Add New Category' });
 };
 
-// 4. POST /new-category - Handle creation
 export const processNewCategoryForm = async (req, res, next) => {
     try {
         const errors = validationResult(req);
@@ -56,17 +43,18 @@ export const processNewCategoryForm = async (req, res, next) => {
     } catch (error) { next(error); }
 };
 
-// 5. GET /edit-category/:id - Show edit form
 export const showEditCategoryForm = async (req, res, next) => {
     try {
         const categoryRows = await getCategoryById(req.params.id);
-        const category = categoryRows[0];
-        if (!category) return res.status(404).send('Category not found');
-        res.render('edit-category', { title: 'Edit Category', category });
+        const category = categoryRows[0]; // 🚀 FIXED: Unpacks rows cleanly so edit view loads instead of crashing!
+        if (!category) {
+            req.flash('error', 'Category not found inside the tracking index.');
+            return res.redirect('/categories');
+        }
+        res.render('edit-category', { title: 'Edit Category Name', category });
     } catch (error) { next(error); }
 };
 
-// 6. POST /edit-category/:id - Handle update
 export const processEditCategoryForm = async (req, res, next) => {
     try {
         const errors = validationResult(req);
@@ -80,11 +68,6 @@ export const processEditCategoryForm = async (req, res, next) => {
     } catch (error) { next(error); }
 };
 
-// 🚀 Validation Schema
 export const categoryValidation = [
-    body('category_name')
-        .trim()
-        .notEmpty().withMessage('Name is required.')
-        .isLength({ min: 3, max: 100 }).withMessage('Name must be 3-100 characters.')
-        .escape()
+    body('category_name').trim().notEmpty().withMessage('Category name field is required.').escape()
 ];
