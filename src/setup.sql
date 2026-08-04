@@ -108,3 +108,14 @@ VALUES ('testuser', 'test@example.com', 'placeholder_hash', 1);
 SELECT u.user_id, u.name, u.email, r.role_name, r.role_description
 FROM users u
 JOIN roles r ON u.role_id = r.role_id;
+
+CREATE TABLE IF NOT EXISTS public.project_volunteer (
+    user_id INT NOT NULL,
+    project_id INT NOT NULL,
+    volunteered_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT project_volunteer_pk PRIMARY KEY (user_id, project_id),
+    CONSTRAINT fk_volunteer_user FOREIGN KEY (user_id) 
+        REFERENCES public.users (user_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_volunteer_project FOREIGN KEY (project_id) 
+        REFERENCES public.service_project (project_id) ON UPDATE CASCADE ON DELETE CASCADE
+);

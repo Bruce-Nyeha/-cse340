@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+
+<main class="dashboard-main-container">
+    <h1 class="page-title"><%= title %></h1>
+    
+    <div class="content-card-box">
+        <h2 class="sub-section-heading">Your Active Volunteering Signups</h2>
+        
+        <% if (locals.volunteeredProjects && volunteeredProjects.length > 0) { %>
+            <div class="dashboard-projects-list-wrapper">
+                <% volunteeredProjects.forEach(project => { %>
+                    <div class="dashboard-project-row-item">
+                        <div class="project-info-side">
+                            <h3 class="dashboard-item-title">
+                                <a href="/project/<%= project.project_id %>"><%= project.title %></a>
+                            </h3>
+                            <p class="dashboard-item-meta">Sponsored by: <strong><%= project.organization_name %></strong></p>
+                        </div>
+                        <div class="project-action-side">
+                            <a href="/unvolunteer/<%= project.project_id %>?from=dashboard" class="cancel-volunteer-link">Remove Me</a>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p class="empty-dashboard-message">You have not volunteered for any service projects yet. Explore the projects directory to sign up!</p>
+        <% } %>
+    </div>
+</main>
+
+<%- include('partials/footer') %>

@@ -2,6 +2,7 @@ import { validationResult, body } from 'express-validator';
 import { getAllProjects, getProjectById, createProject, updateProject } from '../models/projects.js';
 import { getAllOrganizations } from '../models/organizations.js';
 import { getAllCategories, getCategoriesByProjectId, updateProjectCategories } from '../models/categories.js';
+import { isUserVolunteering } from '../models/volunteers.js';
 
 export const showProjectsPage = async (req, res, next) => {
     try {
@@ -12,12 +13,31 @@ export const showProjectsPage = async (req, res, next) => {
 
 export const showProjectDetailPage = async (req, res, next) => {
     try {
-        const project = await getProjectById(req.params.id);
+        const projectId = req.params.id;
+        const projectRows = await getProjectById(projectId);
+        
+        // 🚀 FIXED: Safely unpack the single object row from the database array
+        const project = Array.isArray(projectRows) ? projectRows[0] : projectRows;
+        
         if (!project) return res.status(404).send('Project not found');
-        const categories = await getCategoriesByProjectId(req.params.id);
-        res.render('project-details', { title: project.title, project, categories });
+        
+        const categories = await getCategoriesByProjectId(projectId);
+        
+        // Check volunteering status for the active user session
+        let userIsVolunteering = false;
+        if (req.session && req.session.user) {
+            userIsVolunteering = await isUserVolunteering(req.session.user.user_id, project.project_id);
+        }
+
+        res.render('project-details', { 
+            title: project.title, 
+            project, 
+            categories, 
+            userIsVolunteering 
+        });
     } catch (error) { next(error); }
 };
+
 
 export const showNewProjectForm = async (req, res, next) => {
     try {

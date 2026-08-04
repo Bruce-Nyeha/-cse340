@@ -48,6 +48,21 @@
         <div class="assignment-link-row" style="margin-top: 2rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem;">
             <a href="/assign-categories/<%= project.project_id %>" class="add-btn-link">⚙ Assign / Update Categories</a>
         </div>
+            
+                
+        <div class="volunteer-actions-portal-block">
+            <% if (locals.user) { %>
+                <% const finalProjectId = project.project_id || project.id; %>
+                <% if (userIsVolunteering) { %>
+                    <p class="volunteer-status-notice-text">✓ You are volunteering for this project.</p>
+                    <a href="/unvolunteer/<%= finalProjectId %>" class="cancel-volunteer-link">Cancel Volunteering Assignment</a>
+                <% } else { %>
+                    <a href="/volunteer/<%= finalProjectId %>" class="add-btn-link">🙋 Volunteer for this Project</a>
+                <% } %>
+            <% } %>
+        </div>
+
+
     </div>
     
     <a href="/projects" class="directory-back-link">← Back to All Projects</a>
