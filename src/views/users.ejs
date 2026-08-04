@@ -1,0 +1,38 @@
+<%- include('partials/header') %>
+
+<main class="users-directory-main-container">
+    <h1 class="page-title"><%= title %></h1>
+    
+    <div class="content-card-box">
+        <% if (locals.systemUsers && systemUsers.length > 0) { %>
+            <div class="table-responsive-wrapper">
+                <table class="directory-data-table">
+                    <thead>
+                        <tr>
+                            <th>Account Name</th>
+                            <th>Email Address</th>
+                            <th>Assigned System Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% systemUsers.forEach(account => { %>
+                            <tr>
+                                <td class="user-cell-name"><strong><%= account.name %></strong></td>
+                                <td class="user-cell-email"><%= account.email %></td>
+                                <td class="user-cell-role">
+                                    <span class="role-badge-pill <%= account.role_name.toLowerCase() %>">
+                                        <%= account.role_name %>
+                                    </span>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        <% } else { %>
+            <p class="no-data-message">No user accounts found in the database system.</p>
+        <% } %>
+    </div>
+</main>
+
+<%- include('partials/footer') %>

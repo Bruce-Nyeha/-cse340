@@ -40,7 +40,8 @@ import {
     processLoginForm,
     userRegistrationValidation, 
     userLoginValidation,
-    processLogout
+    processLogout,
+    showUsersDirectoryPage
 } from './controllers/users.js';
 
 import { testErrorPage } from './controllers/errors.js';
@@ -67,6 +68,7 @@ router.get('/login', showLoginForm);
 //  Injected userLoginValidation to block blank inputs
 router.post('/login', userLoginValidation, processLoginForm);
 router.get('/logout', processLogout);
+router.get('/users', requireLogin, showUsersDirectoryPage);
 
 // SECURED ORGANIZATIONS ROUTES (Requires baseline authentication)
 router.get('/new-organization', requireLogin, showNewOrganizationForm);

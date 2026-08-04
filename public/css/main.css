@@ -520,3 +520,68 @@ nav ul li a:hover, nav ul li a:focus,
   cursor: default;
   user-select: none;
 }
+
+
+/* 📋 Administration Users Management Directory Table Styling Layouts */
+
+.users-directory-main-container {
+  max-width: 1000px;
+  margin: 3rem auto;
+}
+
+.table-responsive-wrapper {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.directory-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.directory-data-table th {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+}
+
+.directory-data-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  color: var(--text-main);
+}
+
+.directory-data-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.role-badge-pill {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.role-badge-pill.admin {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+}
+
+.role-badge-pill.student {
+  background-color: #f0fdf4;
+  color: #166534;
+  border: 1px solid #86efac;
+}
+
+.role-badge-pill.instructor {
+  background-color: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #93c5fd;
+}

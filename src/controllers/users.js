@@ -1,7 +1,7 @@
 // src/controllers/users.js
 import bcrypt from 'bcryptjs';
 import { validationResult, body } from 'express-validator'; 
-import { createUser, authenticateUser } from '../models/users.js';
+import { createUser, authenticateUser, getAllUsersWithRoles } from '../models/users.js';
 
 /**
  * 1. Render the Registration form view page
@@ -96,3 +96,13 @@ export const userLoginValidation = [
     body('email').trim().isEmail().withMessage('Please enter a valid email.').normalizeEmail(),
     body('password').notEmpty().withMessage('Password field cannot be blank.')
 ];
+
+
+export const showUsersDirectoryPage = async (req, res, next) => {
+    try {
+        const systemUsers = await getAllUsersWithRoles();
+        res.render('users', { title: 'System User Directory', systemUsers });
+    } catch (error) {
+        next(error);
+    }
+};
